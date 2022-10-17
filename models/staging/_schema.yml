@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: customers table
+    columns:
+      - name: customer_id
+        description: primary key for customers table
+        tests:
+          - unique
+          - not_null
+  - name: stg_orders
+    description: orders table
+    columns:
+      - name: order_id
+        description: primary key for orders table
+        tests:
+          - unique
+          - not_null
+      - name: status
+        description: "{{ doc('order_status') }}"
+        tests:
+          - accepted_values:
+              values: ['placed', 'shipped', 'completed', 'returned', return_pending]
+      - name: customer_id
+        description: forgein key in orders table
+        tests:
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
