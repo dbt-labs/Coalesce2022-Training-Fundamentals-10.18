@@ -1,27 +1,5 @@
-with customers as (
 
-    select
-        id as customer_id,
-        first_name,
-        last_name
-
-    from raw.jaffle_shop_original.customers
-
-),
-
-orders as (
-
-    select
-        id as order_id,
-        user_id as customer_id,
-        order_date,
-        status
-
-    from raw.jaffle_shop_original.orders
-
-),
-
-customer_orders as (
+WITH customer_orders as (
 
     select
         customer_id,
@@ -30,7 +8,7 @@ customer_orders as (
         max(order_date) as most_recent_order_date,
         count(order_id) as number_of_orders
 
-    from orders
+    from {{ref('stg_orders')}}
 
     group by 1
 
@@ -47,7 +25,7 @@ final as (
         customer_orders.most_recent_order_date,
         coalesce(customer_orders.number_of_orders, 0) as number_of_orders
 
-    from customers
+    from {{ref('stg_customers')}}
 
     left join customer_orders using (customer_id)
 
