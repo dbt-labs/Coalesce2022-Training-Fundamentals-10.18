@@ -1,0 +1,10 @@
+version: 2
+sources:
+  - name: jaffle_shop_my_own_name
+    database: raw
+    schema: jaffle_shop_original
+    tables:
+      - name: customers_my_own_name
+        identifier: customers
+      - name: orders_my_own_name
+        # identifier: orders
