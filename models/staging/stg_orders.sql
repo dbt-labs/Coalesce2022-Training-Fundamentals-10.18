@@ -1,5 +1,6 @@
-with raw as (select * 
-from raw.jaffle_shop_original.orders)
+with raw as (
+    select * from {{source('jaffle_shop','orders')}}
+    )
 
 select
     id as order_id
