@@ -10,4 +10,4 @@ select
     order_date,
     status,
     _ETL_LOADED_AT
-from raw.jaffle_shop_original.orders
+from {{ source('jaffle_shop',  'orders') }}
